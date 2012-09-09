@@ -1,0 +1,29 @@
+<body>
+    <!--
+    <div>
+        <%= link_to "Twitterでlogin","/auth/twitter" %>
+        <%= link_to "facebookでlogin", "/auth/facebook" %>
+    </div>
+    -->
+
+    <% if user_signed_in? %>
+        <%= current_user.email %>としてログインしています。
+        <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+    <% elsif current_omniuser %>
+        <%= current_omniuser.name %>さん
+       	<%= link_to "ログアウト", logout_path %>
+    <% else %>
+        <% #どちらでもログインしていなければ「ログイン」と「ユーザ登録」を表示。ログインをクリックするとログイン専用ページへ、ユーザ登録をクリックするとウェルカムページへ遷移させる %>
+        <%= link_to "ログイン", new_user_session_path %>
+        <p>ユーザ登録にはtwitterかfacebookのアカウントが必要です。</p>
+        <%= link_to "Twitterを利用してメンバー登録する","/auth/twitter" %>
+        <%= link_to "facebookを利用してメンバー登録する", "/auth/facebook" %>
+    <% end %>
+
+    <% if notice %>
+        <p id="notice"><%= notice %></p>
+    <% end %>
+
+<%= yield %>
+
+</body>
